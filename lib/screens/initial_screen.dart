@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:primeiro_flutter/components/task.dart';
+import 'package:primeiro_flutter/screens/form_screen.dart';
 
 class InitialScreen extends StatefulWidget {
   const InitialScreen({super.key});
@@ -9,8 +10,6 @@ class InitialScreen extends StatefulWidget {
 }
 
 class _InitialScreenState extends State<InitialScreen> {
-  bool opacidade = true;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,36 +17,21 @@ class _InitialScreenState extends State<InitialScreen> {
         leading: Container(),
         title: const Text('Tarefas'),
       ),
-      body: AnimatedOpacity(
-        opacity: opacidade ? 1 : 0,
-        duration: const Duration(milliseconds: 500),
-        child: ListView(
-          children: const [
-            Task(
-                'Fazer Exercícios',
-                'assets/images/exercicios.jpg',
-                5),
-            Task(
-                'Aprender Inglês',
-                'assets/images/ingles.jpg',
-                4),
-            Task(
-                'Aprender Flutter',
-                'assets/images/flutter.webp',
-                3),
-            SizedBox(
-              height: 80,
-            )
-          ],
-        ),
+      body: ListView(
+        children: const [
+
+          SizedBox(
+            height: 80,
+          )
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          setState(() {
-            opacidade = !opacidade;
-          });
+          // Navigator.push(
+          //     context, MaterialPageRoute(builder: (context) => FormScreen()));
+          Navigator.of(context).pushNamed("/form");
         },
-        child: const Icon(Icons.remove_red_eye),
+        child: const Icon(Icons.add),
       ),
     );
   }

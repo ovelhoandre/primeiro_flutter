@@ -16,8 +16,13 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.indigo,
       ),
-      home: const InitialScreen(),
+      //home: const InitialScreen(),
       //home: const FormScreen(),
+      initialRoute: "/",
+      routes: {
+        "/": (context) => InitialScreen(),
+        "/form": (context) => FormScreen(),
+      },
     );
   }
 }
