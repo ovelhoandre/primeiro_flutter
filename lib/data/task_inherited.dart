@@ -7,13 +7,13 @@ class TaskInherited extends InheritedWidget {
     required Widget child,
   }) : super(child: child);
 
-  final List<Task> taskList = [
+  List<Task> taskList = [
     Task('Fazer Exercícios', 'assets/images/exercicios.jpg', 5),
     Task('Aprender Inglês', 'assets/images/ingles.jpg', 4),
-    Task('Aprender Flutter', 'assets/images/flutter.webp', 3),
+    Task('Aprender Flutter', 'assets/images/flutter.webp', 3)
   ];
 
-  void newTask(String name, int difficulty, String photo) {
+  void newTask(String name, String photo, int difficulty) {
     taskList.add(Task(name, photo, difficulty));
   }
 
@@ -25,7 +25,7 @@ class TaskInherited extends InheritedWidget {
   }
 
   @override
-  bool updateShouldNotify(TaskInherited old) {
-    return ;
+  bool updateShouldNotify(covariant TaskInherited old) {
+    return old.taskList.length != taskList.length;
   }
 }

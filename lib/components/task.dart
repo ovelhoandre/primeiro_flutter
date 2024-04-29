@@ -6,14 +6,22 @@ class Task extends StatefulWidget {
   final String foto;
   final int dificuldade;
 
-  const Task(this.nome, this.foto, this.dificuldade, {super.key});
+  Task(this.nome, this.foto, this.dificuldade, {super.key});
+
+  int nivel = 0;
 
   @override
   State<Task> createState() => _TaskState();
 }
 
 class _TaskState extends State<Task> {
-  int nivel = 0;
+
+  bool assetOrNetwork() {
+    if (widget.foto.contains('http')) {
+      return false;
+    }
+    return true;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,10 +56,15 @@ class _TaskState extends State<Task> {
                       width: 72,
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(5),
-                        child: Image.asset(
-                          widget.foto,
-                          fit: BoxFit.cover,
-                        ),
+                        child: assetOrNetwork()
+                            ? Image.asset(
+                                widget.foto,
+                                fit: BoxFit.cover,
+                              )
+                            : Image.network(
+                                widget.foto,
+                                fit: BoxFit.cover,
+                              ),
                       ),
                     ),
                     Column(
@@ -79,7 +92,7 @@ class _TaskState extends State<Task> {
                       child: ElevatedButton(
                           onPressed: () {
                             setState(() {
-                              nivel++;
+                              widget.nivel++;
                             });
                             //print(nivel);
                           },
@@ -110,14 +123,14 @@ class _TaskState extends State<Task> {
                       child: LinearProgressIndicator(
                         color: Colors.white,
                         value: (widget.dificuldade > 0)
-                            ? nivel / (10 * widget.dificuldade)
+                            ? widget.nivel / (10 * widget.dificuldade)
                             : 1,
                       ),
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Text('Nivel: $nivel',
+                    child: Text('Nivel: $widget.nivel',
                         style:
                             const TextStyle(color: Colors.white, fontSize: 16)),
                   ),
