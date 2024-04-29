@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:primeiro_flutter/components/difficulty.dart';
+import 'package:primeiro_flutter/data/task_dao.dart';
 
 class Task extends StatefulWidget {
   final String nome;
@@ -15,7 +16,6 @@ class Task extends StatefulWidget {
 }
 
 class _TaskState extends State<Task> {
-
   bool assetOrNetwork() {
     if (widget.foto.contains('http')) {
       return false;
@@ -90,6 +90,36 @@ class _TaskState extends State<Task> {
                       height: 52,
                       width: 52,
                       child: ElevatedButton(
+                          onLongPress: () {
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) => AlertDialog(
+                                title: const Center(child: Text('Confirma?')),
+                                content: const Center(
+                                  child: Text('Excluir dispositivo?'),
+                                  heightFactor: 1,
+                                ),
+                                actions: <Widget>[
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      TextButton(
+                                        onPressed: () => Navigator.pop(context),
+                                        child: const Text('CANCELAR'),
+                                      ),
+                                      TextButton(
+                                        onPressed: (() {
+                                          TaskDao().delete(widget.nome);
+                                          Navigator.pop(context);
+                                        }),
+                                        child: const Text('EXCLUIR'),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
                           onPressed: () {
                             setState(() {
                               widget.nivel++;
